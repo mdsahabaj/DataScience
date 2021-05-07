@@ -1,0 +1,195 @@
+Let’s First Create and Understand Dummy Dataset
+1: Counting Rows and Items
+2: Aggregation Functions
+3: Extreme Value Identification
+4: Slicing Data
+5: Limiting Data
+6: Sorting Data
+7: Filtering Patterns
+8: Groupings, Rolling up Data and Filtering in Groups
+ 
+#CREATE CUSTOMERDETAILS TABLE
+-----------------------------------------------
+create table CustomerDetails(
+Customer_Id int primary key auto_increment,
+Name varchar(20),
+locality varchar(20),
+amount_spend int,
+industry varchar(20)
+);
+show tables;
+
+#INSERT_CUSTOMER_DETAILS (WITH NULL VALUES AND DUPLICATE ENTRY)
+-------------------------------------------------
+insert into customerdetails value (1,'Sahabaj','Kolkata',1000,'Manufacturing');
+insert into customerdetails value (2,'Bappy','Gujrat',2000,'Creative');
+insert into customerdetails value (3,'Rohan','Goa',1200,'News');
+insert into customerdetails value (4,'Raj','Mumbai',1500,'Tech');
+insert into customerdetails value (5,'Kapil','Chennai',1070,'Teaching');
+insert into customerdetails value (6,'Tanmay','Pune',1000,'Manufacturing');
+insert into customerdetails value (7,'Arun','Hydrabad',null,'Aviation');
+insert into customerdetails value (8,'Mohan','Bengalore',2650,'Defence');
+insert into customerdetails value (9,'Salman','Punjab',5200,'Aviation');
+insert into customerdetails value (10,'Munna','Delhi Ncr',1000,'Manufacturing');
+insert into customerdetails value (11,'Sahabaj','Kolkata',1000,'Manufacturing');
+insert into customerdetails value (12,'Tanmay','Pune',1000,'Manufacturing');
+
+select * from customerDetails;
+
+SQL Technique #1 – Counting Rows and Items
+--------------------------------------------------
+Count Function - We will begin our analysis with the simplest query, i.e, counting the number of rows in our table. We will do this by using the function – COUNT().
+
+Query - select count(*) from customerdetails;
+Ans - 12
+
+Distinct Function - many duplicate industry value is there so count unique number of industry 
+
+Query -  select distinct industry from CustomerDetails;
+  select count( distinct industry)from CustomerDetails;
+Answer -7
+
+SQL Technique #2 – Aggregation Functions
+---------------------------------------------
+SUM,AVG,STDDEV
+Query -   select sum(amount_spend) as TotalAmount, avg(amount_spend) as averageAmount,stddev(amount_spend) as Standard_Deviation from customerDetails;
+
+Ans-	TotalAmount	averageAmount	Standard_Deviation
+	  18620	          1692.7273	1220.2391040588645
+
+SQL Technique #3 – Extreme Value Identification
+---------------------------------------------------
+max,min function
+Query -     select max(amount_spend) as MaxAmount, min(amount_spend) as minAmount from customerDetails;
+ans-	MaxAmount	minAmount
+	  5200	          1000
+
+SQL Technique #4 – Slicing Data
+-------------------------------------
+Where clause with arthmatic and logical operator,group by , having clause
+
+1.finding null value in amount
+Query -select * from CustomerDetails where amount_spend is null;
+   select count (*) from CustomerDetails where amount_spend is not null;
+ans-1 row null 11 not null 
+
+2- find all details about manufacturing industry
+Q-  select * from customerdetails where industry ='manufacturing';
+A- 	1	Sahabaj	Sahabaj Nagar	1000	Manufacturing
+	6	Tanmay	Pune	1000	Manufacturing
+	10	Munna	Delhi Ncr	1000	Manufacturing
+	11	Sahabaj	Kolkata	1000	Manufacturing
+	12	Tanmay	Pune	1000	Manufacturing
+
+3-Total amount spent in teaching 
+Q-  select sum(amount_spend) as Total_amount_spent_teaching from customerdetails group by industry having industry ='teaching';
+
+SQL Technique #5 – Limiting Data
+-------------------------------------------
+limit and offset
+
+Q-  select * from customerdetails limit 2 offset 3;
+(offset is use to skip First 3 row , when we want to see 4 and 5 then we use  offset and limit)
+
+A-	4	Raj	Mumbai	1500	Tech
+	5	Kapil	Chennai	1070	Teaching
+
+SQL Technique #6 – Sorting Data
+ Order By
+Q-   Select * from customerdetails order by amount_spend;
+
+ A- 	7	Arun	Hydrabad		Aviation
+	1	Sahabaj	Sahabaj Nagar	1000	Manufacturing
+	6	Tanmay	Pune	1000	Manufacturing
+	10	Munna	Delhi Ncr	1000	Manufacturing
+	11	Sahabaj	Kolkata	1000	Manufacturing
+	12	Tanmay	Pune	1000	Manufacturing
+	5	Kapil	Chennai	1070	Teaching
+	3	Rohan	Goa	1200	News
+	4	Raj	Mumbai	1500	Tech
+	2	Bappy	Gujrat	2000	Creative
+	8	Mohan	Bengalore	2650	Defence
+	9	Salman	Punjab	5200	Aviation
+
+SQL Technique #7 – Filtering Patterns
+-------------------------------------------
+
+Like and Wildcard Characters
+1.finding all customer details where name starts with s
+Q-  select * from customerdetails where name like 's%';
+
+a-	1	Sahabaj	Sahabaj Nagar	1000	Manufacturing
+	9	Salman	Punjab	5200	Aviation
+	11	Sahabaj	Kolkata	1000	Manufacturing
+
+
+
+
+
+
+
+SQL Technique #8 – Groupings, Rolling up Data and Filtering in Groups
+1.Total amount spent in industry wise
+Q-    select sum(amount_spend) as Total_amount, industry from customerdetails group by industry;
+
+a-	Total_amount	industry
+	5000	Manufacturing
+	2000	Creative
+	1200	News
+	1500	Tech
+	1070	Teaching
+	5200	Aviation
+	2650	Defence
+
+STEP BY STEP PRACTICAL IN MYSQL DBMS 
+----------------------------------------------------------------
+#CREATE CUSTOMER TABLE
+create table CustomerDetails(
+Customer_Id int primary key auto_increment,
+Name varchar(20),
+locality varchar(20),
+amount_spend int,
+industry varchar(20)
+);
+show tables;
+#INSERT_CUSTOMER_DETAILS
+insert into customerdetails value (1,'Sahabaj','Kolkata',1000,'Manufacturing');
+insert into customerdetails value (2,'Bappy','Gujrat',2000,'Creative');
+insert into customerdetails value (3,'Rohan','Goa',1200,'News');
+insert into customerdetails value (4,'Raj','Mumbai',1500,'Tech');
+insert into customerdetails value (5,'Kapil','Chennai',1070,'Teaching');
+insert into customerdetails value (6,'Tanmay','Pune',1000,'Manufacturing');
+insert into customerdetails value (7,'Arun','Hydrabad',null,'Aviation');
+insert into customerdetails value (8,'Mohan','Bengalore',2650,'Defence');
+insert into customerdetails value (9,'Salman','Punjab',5200,'Aviation');
+insert into customerdetails value (10,'Munna','Delhi Ncr',1000,'Manufacturing');
+insert into customerdetails value (11,'Sahabaj','Kolkata',1000,'Manufacturing');
+insert into customerdetails value (12,'Tanmay','Pune',1000,'Manufacturing');
+
+select * from customerDetails;
+ select count(*) from customerdetails;
+ select distinct industry from CustomerDetails;
+  select distinct industry from CustomerDetails;
+  select count( distinct industry)from CustomerDetails;
+  select sum(amount_spend) as TotalAmount, avg(amount_spend) as averageAmount,stddev(amount_spend) as Standard_Deviation from customerDetails;
+    select max(amount_spend) as MaxAmount, min(amount_spend) as minAmount from customerDetails;
+
+  select * from CustomerDetails where amount_spend is null;
+   select count (*) from CustomerDetails where amount_spend is not null;
+  select * from customerdetails where industry ='manufacturing';
+  select sum(amount_spend) as Total_amount_spent_teaching from customerdetails group by industry having industry ='teaching';
+  select * from customerdetails limit 2 offset 3;
+  Select * from customerdetails order by amount_spend;
+  select * from customerdetails where name like 's%';
+  select sum(amount_spend) as Total_amount, industry from customerdetails group by industry;
+
+
+
+
+
+
+
+
+
+
+
