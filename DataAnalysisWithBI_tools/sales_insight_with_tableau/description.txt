@@ -1,0 +1,2 @@
+Full fledge tableau project for real life use case of predicting sales insights for a hardware supplier company
+tools-tableau,mysql
